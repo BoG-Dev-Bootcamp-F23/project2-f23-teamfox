@@ -1,5 +1,5 @@
 import updateAnimal from "../../../server/mongodb/actions/updateAnimal.js";
-import updateAnimal from "../../../server/mongodb/actions/deleteAnimal.js";
+import deleteAnimal from "../../../server/mongodb/actions/deleteAnimal.js";
 
 export default async function handler(req, res) {
     if (req.method === "PATCH") {
