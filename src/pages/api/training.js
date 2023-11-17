@@ -1,5 +1,5 @@
 import deleteTrainingLog from "../../../server/mongodb/actions/deleteTrainingLog.js";
-import updateTrainingLog from "../../../server/mongodb/actions/updateAnimal.js";
+import updateTrainingLog from "../../../server/mongodb/actions/updateTrainingLog.js";
 
 export default async function handler(req, res) {
     if (req.method === "PATCH") {
