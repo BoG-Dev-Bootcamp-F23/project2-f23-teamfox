@@ -1,24 +1,33 @@
-import updateAnimal from "../../../server/mongodb/actions/updateAnimal.js";
+import deleteUser from "../../../server/mongodb/actions/deleteUser.js";
+import createUser from "../../../server/mongodb/actions/createuser.js";
 
 export default async function handler(req, res) {
     if (req.method === "POST") {
-        req.body 
-    } else if (req.method === "PATCH") {
+        // create user
         try {
-            const { animalID, addValue } = req.body;
-            const response = await updateAnimal(animalID, addValue);
-            // console.log(response);
+            const { userID } = req.body;
+            const response = await createUser(userID); 
             return res.status(200).json({"status": "success"});
         } catch (e) {
-            console.log(e.message.toString());
-            if (e.message.toString() === "Error: Animal Not Found") {
-                return res.status(400).json({"status": "Animal Not Found."});
+            if (e.message.toString() === "Error: User exists already") {
+                return res.status(400).json({"status": "Failed to create because user exists already"});
+            } else {
+                return res.status(500).json({"status": "Failed to create because external issues"});
             }
-            else return res.status(500).json({"status": "Failed to update animal due to database issues."});
         }
-    } else if (req.method === "GET") {
-        req.query
     } else if (req.method === "DELETE") {
-        req.query
+        // deletes a user
+        try {
+            const { userID } = req.query;
+            const response = await deleteUser(userID);
+            return res.status(200).json({"status": "success"});
+        } catch (e) {
+            if (e.message.toString() === "Error: User Not Found") {
+                return res.status(400).json({"status": "User Not Found."});
+            } else {
+                return res.status(500).json({"status": "Failed to update animal due to database issues."});
+            }
+        }
+        
     }
 }
