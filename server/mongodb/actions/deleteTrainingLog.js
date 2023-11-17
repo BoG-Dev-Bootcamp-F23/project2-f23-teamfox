@@ -1,6 +1,6 @@
 import User from '../models/User';
 import Animal from '../models/Animal';
-import TrainingLog from '../TrainingLog';
+import TrainingLog from '../models/TrainingLog';
 import connectDB from '../index';
 
 async function deleteTrainingLog(data) {
@@ -10,7 +10,7 @@ async function deleteTrainingLog(data) {
         // Find the training log to get the associated animal ID
         const trainingLog = await TrainingLog.findById(trainingLogId);
         if (!trainingLog) {
-            return false;
+            throw new error('Training Log Not Found');
         }
         // Delete the training log
         await TrainingLog.deleteOne({ _id: trainingLogId });

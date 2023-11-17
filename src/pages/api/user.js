@@ -1,12 +1,14 @@
 import deleteUser from "../../../server/mongodb/actions/deleteUser.js";
-import createUser from "../../../server/mongodb/actions/createuser.js";
+import createUser from "../../../server/mongodb/actions/createUser.js";
 
 export default async function handler(req, res) {
     if (req.method === "POST") {
         // create user
         try {
-            const { userID } = req.body;
-            const response = await createUser(userID); 
+            console.log("adsfadsf");
+            console.log(req.body);
+            const response = await createUser(req.body); 
+            console.log(response);
             return res.status(200).json({"status": "success"});
         } catch (e) {
             if (e.message.toString() === "Error: User exists already") {
