@@ -8,7 +8,10 @@ async function deleteUser(data) {
     try {
         const {userId} = data;
         // Delete the user
-        await User.deleteOne({ _id: userId });
+        const user = await User.deleteOne({ _id: userId });
+        if (user === null) {
+            throw new error('User Not Found');
+        }
         // Delete animals associated with user
         await Animal.deleteMany({ owner: userId });
         // Delete training logs associated with user
