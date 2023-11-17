@@ -5,7 +5,8 @@ import User from '../models/User.js'
 export default async function createUser(data) {
     try {
         await connectDB()
-        if (User.findOne({ email: data.email }) !== null) {
+        const existingUser = await User.findOne({ email: data.email });
+        if (existingUser) {
             throw new Error("User exists already")
         }
         const newUser = new User(data)
