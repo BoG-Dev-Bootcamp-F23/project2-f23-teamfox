@@ -1,12 +1,12 @@
 import connectDB from "../index.js"
 import TrainingLog from "../models/TrainingLog.js"
 
-export default async function updateTrainingLog(trainingLogID, updates) {
+export default async function updateTrainingLog(data) {
     try {
         await connectDB();
         const updatedTrainingLog = await TrainingLog.findByIdAndUpdate(
-            trainingLogID,
-            { $set: updates },
+            data.trainingLogID,
+            { $set: data.updates },
             { new: true }
         );
         if (updatedTrainingLog === null) {

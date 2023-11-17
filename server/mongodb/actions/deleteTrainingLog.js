@@ -1,6 +1,6 @@
 import User from '../models/User';
 import Animal from '../models/Animal';
-import TrainingLog from '../TrainingLog';
+import TrainingLog from '../models/TrainingLog';
 import connectDB from '../index';
 
 async function deleteTrainingLog(data) {
