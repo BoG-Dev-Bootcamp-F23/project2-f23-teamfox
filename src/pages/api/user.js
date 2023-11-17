@@ -6,8 +6,9 @@ export default async function handler(req, res) {
         // create user
         try {
             console.log("adsfadsf");
-            const { userID } = req.body;
-            const response = await createUser(userID); 
+            console.log(req.body);
+            const response = await createUser(req.body); 
+            console.log(response);
             return res.status(200).json({"status": "success"});
         } catch (e) {
             if (e.message.toString() === "Error: User exists already") {
