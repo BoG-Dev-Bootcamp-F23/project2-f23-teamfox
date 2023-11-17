@@ -5,9 +5,7 @@ import createAnimal from "../../../server/mongodb/actions/createAnimal.js";
 export default async function handler(req, res) {
     if (req.method === "PATCH") {
         try {
-            const { animalID, addValue } = req.body;
-            const response = await updateAnimal(animalID, addValue);
-            // console.log(response);
+            const response = await updateAnimal(req.body);
             return res.status(200).json({"status": "success"});
         } catch (e) {
             console.log(e.message.toString());
@@ -18,9 +16,7 @@ export default async function handler(req, res) {
         }
     } else if (req.method === 'DELETE') {
         try {
-            const { animalID } = req.body;
-            const response = await deleteAnimal(animalID);
-            // console.log(response);
+            const response = await deleteAnimal(req.body);
             return res.status(200).json({"status": "success"});
         } catch (e) {
             console.log(e.message.toString());
@@ -31,10 +27,7 @@ export default async function handler(req, res) {
         }
     } else if (req.method === 'POST') {
         try {
-            // const { animalID, addValue } = req.body;
-            console.log(req.body);
             const response = await createAnimal(req.body);
-            // console.log(response);
             return res.status(200).json({"status": "success"});
         } catch (e) {
             console.log(e.message.toString());

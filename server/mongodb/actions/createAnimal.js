@@ -5,10 +5,9 @@ import Animal from '../models/Animal.js'
 export default async function createAnimal(data) {
     try {
         await connectDB()
-        // if (!User.exists({ _id: data.owner })){
-        //     throw new Error("Owner Not Found")
-        // }
-        console.log(data);
+        if (User.findOne({ _id: data.owner }) === null) {
+            throw new Error("Owner Not Found")
+        }
         const newAnimal = new Animal(data)
         await newAnimal.save()
     } catch (e) {

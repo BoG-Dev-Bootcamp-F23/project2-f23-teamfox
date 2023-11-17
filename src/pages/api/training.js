@@ -31,9 +31,9 @@ export default async function handler(req, res) {
         }
     } else if (req.method === 'POST') {
         try {
-            // const { animalID, addValue } = req.body;
+            console.log(req.body)
             const response = await createTrainingLog(req.body);
-            // console.log(response);
+            console.log(response);
             return res.status(200).json({"status": "success"});
         } catch (e) {
             console.log(e.message.toString());
