@@ -8,7 +8,7 @@ export default async function updateAnimal(animalID, addValue) {
             { _id: animalID },
             { $inc: { hoursTrained: addValue}}
         );
-        if (animal === null) {
+        if (animal.modifiedCount === 0) {
             throw new Error("Animal Not Found");
         }
     } catch (e) {
