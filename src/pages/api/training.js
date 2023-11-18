@@ -17,8 +17,7 @@ export default async function handler(req, res) {
         }
     } else if (req.method === 'DELETE') {
         try {
-            const { trainingLogID } = req.body;
-            const response = await deleteTrainingLog(trainingLogID);
+            const response = await deleteTrainingLog(req.query);
             // console.log(response);
             return res.status(200).json({"status": "success"});
         } catch (e) {

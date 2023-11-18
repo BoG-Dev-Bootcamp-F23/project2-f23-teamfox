@@ -6,18 +6,20 @@ import connectDB from '../index';
 async function deleteAnimal(data) {
     await connectDB();
     try {
-        const { animalId } = data;
+        const { animalID } = data;
         // Delete the animal
-        const deletedAnimal = await Animal.deleteOne({ _id: animalId });
-        if (deletedAnimal === null) {
-            throw new error('Animal Not Found')
+        const deletedAnimal = await Animal.deleteOne({ _id: animalID });
+        console.log(deletedAnimal);
+        if (deletedAnimal.deletedCount === 0) {
+            console.log("Animal Not Found");
+            throw new Error('Animal Not Found')
         }
         // Delete training logs associated with the animal
-        await TrainingLog.deleteMany({ animal: animalId });
+        await TrainingLog.deleteMany({ animal: animalID });
         return true;
     } catch (error) {
         console.error('Error deleting animal:', error.message);
-        return false;
+        throw new Error(error);
     }
 };
 

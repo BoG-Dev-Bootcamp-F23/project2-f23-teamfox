@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         }
     } else if (req.method === 'DELETE') {
         try {
-            const response = await deleteAnimal(req.body);
+            const response = await deleteAnimal(req.query);
             return res.status(200).json({"status": "success"});
         } catch (e) {
             console.log(e.message.toString());
