@@ -5,8 +5,7 @@ import createTrainingLog from "../../../server/mongodb/actions/createTrainingLog
 export default async function handler(req, res) {
     if (req.method === "PATCH") {
         try {
-            const { trainingLogID, updates } = req.body;
-            const response = await updateTrainingLog(trainingLogID, updates);
+            const response = await updateTrainingLog(req.body);
             // console.log(response);
             return res.status(200).json({"status": "success"});
         } catch (e) {
