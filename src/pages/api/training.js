@@ -41,7 +41,7 @@ export default async function handler(req, res) {
                 return res.status(400).json({"status": "Animal Not Found."});
             }
             else if (e.message.toString() === "Error: User Not Found") {
-                return res.status(400).json({"status": "User Not Found."})
+                return res.status(400).json({"status": "User Not Found."});
             }
             else return res.status(500).json({"status": "Failed to create training log due to database issues."});
         }
