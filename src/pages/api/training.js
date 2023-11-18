@@ -43,6 +43,9 @@ export default async function handler(req, res) {
             else if (e.message.toString() === "Error: User Not Found") {
                 return res.status(400).json({"status": "User Not Found."});
             }
+            else if (e.message.toString() === "Error: Animal's user does not match passed in user") {
+                return res.status(400).json({"status": "Animal's user does not match passed in user"});
+            }
             else return res.status(500).json({"status": "Failed to create training log due to database issues."});
         }
     }
