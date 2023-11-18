@@ -20,8 +20,7 @@ export default async function handler(req, res) {
     } else if (req.method === "DELETE") {
         // deletes a user
         try {
-            const { userID } = req.query;
-            const response = await deleteUser(userID);
+            const response = await deleteUser(req.query);
             return res.status(200).json({"status": "success"});
         } catch (e) {
             if (e.message.toString() === "Error: User Not Found") {
