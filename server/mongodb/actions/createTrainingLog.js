@@ -14,11 +14,12 @@ export default async function createTrainingLog(data) {
             throw new Error("User Not Found");
         }
         const animalExists = await Animal.findOne({ _id: data.animal });
+        console.log(animalExists);
         if (animalExists === null){
             throw new Error("Animal Not Found");
         }
-        console.log(animalExists.owner);
-        console.log(data.user);
+        // console.log(animalExists.owner);
+        // console.log(data.user);
         if (animalExists.owner.toString() !== data.user) {
             throw new Error("Animal's user does not match passed in user")
         }
