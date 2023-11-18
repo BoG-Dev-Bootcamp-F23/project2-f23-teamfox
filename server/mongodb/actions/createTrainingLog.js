@@ -17,6 +17,11 @@ export default async function createTrainingLog(data) {
         if (animalExists === null){
             throw new Error("Animal Not Found");
         }
+        console.log(animalExists.owner);
+        console.log(data.user);
+        if (animalExists.owner.toString() !== data.user) {
+            throw new Error("Animal's user does not match passed in user")
+        }
         const newTrainingLog = new TrainingLog(data);
         await newTrainingLog.save();
 
