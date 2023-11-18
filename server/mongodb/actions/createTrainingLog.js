@@ -8,18 +8,28 @@ import updateAnimal from './updateAnimal.js'
 export default async function createTrainingLog(data) {
     try {
         await connectDB();
+        let userExists = 0, animalExists = 0;
+
+        try {
+            userExists = await User.findOne({ _id: data.user });
+            if (userExists === null){
+                throw new Error("User Not Found");
+            }
+        } catch (e) {
+            console.log(e)
+            throw new Error("User Not Found")
+        }
         
-        const userExists = await User.findOne({ _id: data.user });
-        if (userExists === null){
-            throw new Error("User Not Found");
+        try {
+            animalExists = await Animal.findOne({ _id: data.animal });
+            if (animalExists === null){
+                throw new Error();
+            }
+        } catch (e) {
+            console.log("Animal Not Found")
+            throw new Error("Animal Not Found")
         }
-        const animalExists = await Animal.findOne({ _id: data.animal });
-        console.log(animalExists);
-        if (animalExists === null){
-            throw new Error("Animal Not Found");
-        }
-        // console.log(animalExists.owner);
-        // console.log(data.user);
+
         if (animalExists.owner.toString() !== data.user) {
             throw new Error("Animal's user does not match passed in user")
         }
