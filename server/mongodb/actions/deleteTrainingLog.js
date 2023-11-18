@@ -6,14 +6,14 @@ import connectDB from '../index';
 async function deleteTrainingLog(data) {
     await connectDB();
     try {
-        const { trainingLogId } = data;
+        const { trainingLogID } = data;
         // Find the training log to get the associated animal ID
-        const trainingLog = await TrainingLog.findById(trainingLogId);
+        const trainingLog = await TrainingLog.findById(trainingLogID);
         if (!trainingLog) {
-            throw new error('Training Log Not Found');
+            throw new Error('Training Log Not Found');
         }
         // Delete the training log
-        await TrainingLog.deleteOne({ _id: trainingLogId });
+        await TrainingLog.deleteOne({ _id: trainingLogID });
         // Update the associated animal's hoursTrained
         const animal = await Animal.findById(trainingLog.animal);
         if (animal) {

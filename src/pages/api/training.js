@@ -5,8 +5,7 @@ import createTrainingLog from "../../../server/mongodb/actions/createTrainingLog
 export default async function handler(req, res) {
     if (req.method === "PATCH") {
         try {
-            const { trainingLogID, updates } = req.body;
-            const response = await updateTrainingLog(trainingLogID, updates);
+            const response = await updateTrainingLog(req.body);
             // console.log(response);
             return res.status(200).json({"status": "success"});
         } catch (e) {
@@ -18,8 +17,7 @@ export default async function handler(req, res) {
         }
     } else if (req.method === 'DELETE') {
         try {
-            const { trainingLogID } = req.body;
-            const response = await deleteTrainingLog(trainingLogID);
+            const response = await deleteTrainingLog(req.query);
             // console.log(response);
             return res.status(200).json({"status": "success"});
         } catch (e) {
@@ -41,7 +39,10 @@ export default async function handler(req, res) {
                 return res.status(400).json({"status": "Animal Not Found."});
             }
             else if (e.message.toString() === "Error: User Not Found") {
-                return res.status(400).json({"status": "User Not Found."})
+                return res.status(400).json({"status": "User Not Found."});
+            }
+            else if (e.message.toString() === "Error: Animal's user does not match passed in user") {
+                return res.status(400).json({"status": "Animal's user does not match passed in user"});
             }
             else return res.status(500).json({"status": "Failed to create training log due to database issues."});
         }
