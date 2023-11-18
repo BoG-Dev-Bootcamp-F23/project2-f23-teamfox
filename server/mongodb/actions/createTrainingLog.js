@@ -7,11 +7,13 @@ import updateAnimal from './updateAnimal.js'
 
 export default async function createTrainingLog(data) {
     try {
-        await connectDB()
-        if (User.findOne({ _id: data.user }) === null){
+        await connectDB();
+        const userExists = await User.findOne({ _id: data.user });
+        const animalExists = await Animal.findOne({ _id: data.animal });
+        if (userExists === null){
             throw new Error("User Not Found")
         }
-        if (Animal.findOne({ _id: data.animal }) === null){
+        if (animalExists === null){
             throw new Error("Animal Not Found")
         }
         const newTrainingLog = new TrainingLog(data)
