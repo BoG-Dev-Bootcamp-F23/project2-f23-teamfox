@@ -4,7 +4,7 @@ import User from '../models/User.js'
 
 export default async function createAnimal(data) {
     try {
-        await connectDB()
+        await connectDB();
         const userExists = await User.findOne({ _id: data.owner })
         if (userExists === null) {
             throw new Error("Owner Not Found")
