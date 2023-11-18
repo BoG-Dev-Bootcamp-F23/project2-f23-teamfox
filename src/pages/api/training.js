@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         } catch (e) {
             console.log(e.message.toString());
             if (e.message.toString() === "Error: Training Log Not Found") {
-                return res.status(400).json({"status": "Training Log Not Found."});
+                return res.status(400).json({"status": "Training Log Not Found"});
             }
             else return res.status(500).json({"status": "Failed to update training log due to database issues."});
         }
@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         } catch (e) {
             console.log(e.message.toString());
             if (e.message.toString() === "Error: Training Log Not Found") {
-                return res.status(400).json({"status": "Training Log Not Found."});
+                return res.status(400).json({"status": "Training Log Not Found"});
             }
             else return res.status(500).json({"status": "Failed to delete training log due to database issues."});
         }
@@ -36,10 +36,10 @@ export default async function handler(req, res) {
         } catch (e) {
             console.log(e.message.toString());
             if (e.message.toString() === "Error: Animal Not Found") {
-                return res.status(400).json({"status": "Animal Not Found."});
+                return res.status(400).json({"status": "Animal Not Found"});
             }
             else if (e.message.toString() === "Error: User Not Found") {
-                return res.status(400).json({"status": "User Not Found."});
+                return res.status(400).json({"status": "User Not Found"});
             }
             else if (e.message.toString() === "Error: Animal's user does not match passed in user") {
                 return res.status(400).json({"status": "Animal's user does not match passed in user"});
