@@ -3,6 +3,8 @@ import User from '../models/User.js'
 
 
 export default async function createUser(data) {
+    data = JSON.parse(data)
+
     try {
         await connectDB()
         const existingUser = await User.findOne({ email: data.email });
@@ -11,6 +13,7 @@ export default async function createUser(data) {
         }
         const newUser = new User(data)
         await newUser.save()
+        return newUser
     } catch (e) {
         throw new Error(e)
     }
