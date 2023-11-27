@@ -3,6 +3,8 @@ import connectDB from '../index.js'
 import User from '../models/User.js'
 
 export default async function verifyUser(data) {
+    data = JSON.parse(data);
+
     try {
         await connectDB()
         

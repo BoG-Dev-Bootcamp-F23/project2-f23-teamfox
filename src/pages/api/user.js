@@ -6,11 +6,15 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
         // create user
         try {
+            const body = JSON.parse(req.body)
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(body.password, salt);
-            const response = await createUser(req.body); 
+            body.password = hash;
+            const response = await createUser(body); 
+            console.log(response);
             return res.status(200).json({"status": "success"});
         } catch (e) {
+            console.log('error')
             if (e.message.toString() === "Error: User exists already") {
                 return res.status(400).json({"status": "Failed to create because user exists already"});
             } else {

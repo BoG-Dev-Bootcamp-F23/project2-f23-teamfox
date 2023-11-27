@@ -4,6 +4,7 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
             const result =  await verifyUser(req.body)
+            console.log(result);
             return res.status(200).json(result)
         } catch (e) {
             if (e.message.toString() === 'Error: User does not exist') {
