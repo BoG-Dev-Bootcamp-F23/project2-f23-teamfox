@@ -1,11 +1,11 @@
-import styles from '../styles/Login.module.css';
+import styles from '../styles/login.module.css';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const navigate = useNavigate();
+    const router = useRouter();
 
     async function login() {
         const result = await fetch('/api/user/verify', {
@@ -15,23 +15,24 @@ export default function Login() {
     }
 
     return (
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={login}>
-                <input type="text" 
-                    id="email" 
+        <div className={styles.flexbox}>
+            <h1 className={styles.title}>Login</h1>
+            <form className={styles.form} onSubmit={login}>
+                <input type="email" 
+                    className={styles.input} 
                     placeholder="Email"
-                    pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+"
                     onChange={(e) => setEmail(e.target.value)} 
                     required></input>
-                <input type="text" 
-                    id="password" 
+                <input type="password" 
+                    className={styles.input} 
                     placeholder="Password"
                     onChange={(e) => setPassword(e.target.value)} 
                     required></input>
-                <button>Log in</button>
+                <button className={styles.button} type="submit">Log in</button>
             </form>
-            <p>Don't have an account? Sign up</p>
+            <p className={styles.bottomNote}>Don't have an account? <a className={styles.click} onClick={() => {
+                router.push('/createaccount')
+            }}>Sign up</a></p>
         </div>
     );
 }

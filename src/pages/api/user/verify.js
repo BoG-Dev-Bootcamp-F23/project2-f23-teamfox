@@ -4,6 +4,7 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
             const result =  await verifyUser(req.body)
+            console.log("this worked")
             console.log(result);
             return res.status(200).json(result)
         } catch (e) {

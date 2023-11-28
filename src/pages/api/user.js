@@ -10,8 +10,7 @@ export default async function handler(req, res) {
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(body.password, salt);
             body.password = hash;
-            const response = await createUser(body); 
-            console.log(response);
+            const response = await createUser(body);
             return res.status(200).json({"status": "success"});
         } catch (e) {
             console.log('error')

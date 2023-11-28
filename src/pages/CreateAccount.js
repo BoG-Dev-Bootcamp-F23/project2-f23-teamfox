@@ -1,6 +1,6 @@
-import styles from '../styles/CreateAccount.module.css';
+import styles from '../styles/createaccount.module.css';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 export default function CreateAccount() {
     const [fullName, setFullName] = useState('');
@@ -8,7 +8,7 @@ export default function CreateAccount() {
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
     const [admin, setAdmin] = useState(false);
-    // const navigate = useNavigate();
+    const router = useRouter();
 
     const handleBlur = (event) => {
         if (event.target.validity.patternMismatch) {
@@ -16,57 +16,81 @@ export default function CreateAccount() {
         }
     }
 
-    async function createUser() {
+    async function handleSubmit() {
         try {
-            // check if an account with this email already exists
-
-            if (password !== confirm) {
-                // error handling
-            }
-            console.log("hihi")
-            const response = await fetch('/api/user', {
-                method: 'POST',
-                body: JSON.stringify({ fullName, email, password, admin })
-            })
+            await createUser()
+            router.push('/login')
         } catch (e) {
 
         }
     }
 
+    async function createUser() {
+        if (password !== confirm) {
+            // error handling
+        }
+        const response = await fetch('/api/user', {
+            method: 'POST',
+            body: JSON.stringify({ fullName, email, password, admin })
+        })
+
+        if (response.status === 'Failed to create because user exists already') {
+            console.log("user exists already")
+        } else if (response.status === 'Failed to create because external issues') {
+            // what do I do here?
+        } else {
+            // router.push({
+            //     pathname: '/login',
+            //     query: {
+            //         userID: response.userID,
+            //         admin: response.admin
+            //     }
+            // })
+        }
+    }
+
     return (
-        <div >
-            <h1>Create Account</h1>
-            <form onSubmit={createUser}>
+        <div className={styles.flexbox}>
+            <h1 className={styles.title}>Create Account</h1>
+            <form className={styles.form}>
                 <input type="text" 
+                    className={styles.input}
                     id="fullName" 
                     placeholder="Full Name"
                     pattern="^[a-zA-Z]+(\s[a-zA-Z]+)+"
                     onChange={(e) => setFullName(e.target.value)}
                     onBlur={handleBlur}
                     required></input>
-                <input type="text" 
+                <input type="email" 
+                    className={styles.input}
                     id="email" 
                     placeholder="Email"
-                    pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+"
                     onChange={(e) => setEmail(e.target.value)} 
                     onBlur={handleBlur}
                     required></input>
-                <input type="text" 
+                <input type="password" 
+                    className={styles.input}
                     id="password" 
                     placeholder="Password"
                     onChange={(e) => setPassword(e.target.value)} 
                     required></input>
-                <input type="text" 
+                <input type="password" 
+                    className={styles.input}
                     id="confirmPassword" 
                     placeholder="Confirm Password"
                     onChange={(e) => setConfirm(e.target.value)} 
                     required></input>
-                <input type="checkbox" 
-                    id="adminAccess"
+                <label className={styles.adminText}><input type="checkbox" 
+                    className={styles.input}
                     onChange={(e) => setAdmin(!admin)}></input>
-                <button type="submit">Sign up</button>
+                    Admin access</label>
+                <button className={styles.button} onClick={() => {
+                    handleSubmit();
+                }}>Sign up</button>
             </form>
-            <p>Already have an account? Sign in</p>
+            <p className={styles.bottomNote}>Already have an account? <a className={styles.click} onClick={() => {
+                router.push('/login')
+            }}>Sign in</a></p>
         </div>
     );
 }
