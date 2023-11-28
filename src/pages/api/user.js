@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import deleteUser from "../../../server/mongodb/actions/deleteUser.js";
 import createUser from "../../../server/mongodb/actions/createUser.js";
 
@@ -5,12 +6,15 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
         // create user
         try {
-            console.log("adsfadsf");
-            console.log(req.body);
-            const response = await createUser(req.body); 
-            console.log(response);
+            const body = JSON.parse(req.body)
+            const salt = bcrypt.genSaltSync(10);
+            const hash = bcrypt.hashSync(body.password, salt);
+            body.password = hash;
+            const response = await createUser(body);
+            console.log("this point 3");
             return res.status(200).json({"status": "success"});
         } catch (e) {
+            console.log('error')
             if (e.message.toString() === "Error: User exists already") {
                 return res.status(400).json({"status": "Failed to create because user exists already"});
             } else {
@@ -20,8 +24,7 @@ export default async function handler(req, res) {
     } else if (req.method === "DELETE") {
         // deletes a user
         try {
-            const { userID } = req.query;
-            const response = await deleteUser(userID);
+            const response = await deleteUser(req.query);
             return res.status(200).json({"status": "success"});
         } catch (e) {
             if (e.message.toString() === "Error: User Not Found") {
