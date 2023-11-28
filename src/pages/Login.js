@@ -9,7 +9,7 @@ export default function Login() {
 
     async function handleSubmit() {
         const response = await login();
-        // throw new Error("not here");
+        console.log(response);
         router.push({
             pathname: '/MainPage',
             query: {
@@ -25,7 +25,8 @@ export default function Login() {
             body: JSON.stringify({ email, password })
         })
         // throw new Error("here");
-        return result
+        const data = await result.json()
+        return data;
     }
 
     return (
@@ -42,14 +43,23 @@ export default function Login() {
                     placeholder="Password"
                     onChange={(e) => setPassword(e.target.value)} 
                     required></input>
-                <button className={styles.button} type="submit" onSubmit={() => {
+                <button className={styles.button} type="submit" onClick={(e) => {
+ 
+                    e.preventDefault();                   
                     handleSubmit();
+                    console.log("aisdofjajsdlf")
+                    // const response = login();
+                    // console.log(response);
+                    // router.push({
+                    //     pathname: '/MainPage',
+                    //     query: {
+                    //         userID: response.userID,
+                    //         admin: response.admin
+                    //     }
+                    // })
                 }}>Log in</button>
             </form>
             <p className={styles.bottomNote}>Don't have an account? <a className={styles.click} onClick={() => {
-                // router.push('/CreateAccount')
-                // console.log("asdfasdf");
-                // handleSubmit();
                 const response = login();
                 router.push({
                     pathname: '/MainPage',

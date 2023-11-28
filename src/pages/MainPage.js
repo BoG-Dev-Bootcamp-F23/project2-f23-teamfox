@@ -33,15 +33,17 @@ export default function MainPage(props) {
     // State for storing animals and training logs
     // const user = props.user;
     // const user = null;
-    let user;
-    const admin = props.admin;
-    const userID = props.userID;
+    // let user;
+    // const admin = props.admin;
+    // const userID = props.userID;
 
     const router = useRouter();
+    const {userID, admin} = router.query;
     const [loading, setLoading] = useState(true);
     const [display, setDisplay] = useState(0);
     const [login, setLogin] = useState(1);
 
+    const [user, setUser] = useState([]);
     const [users, setUsers] = useState([]);
     const [animals, setAnimals] = useState([]);
     const [trainingLogs, setTrainingLogs] = useState([]);
@@ -65,6 +67,7 @@ export default function MainPage(props) {
         const fetchUsers = async () => {
             const response = await fetch(adminAPI + 'users');
             const data = await response.json();
+            console.log(data);
             setUsers(data);
         };
 
@@ -73,16 +76,19 @@ export default function MainPage(props) {
         fetchAnimals();
         fetchTrainingLogs();
         setLoading(false);
-        // user = Users.filter(user => user._id === userID);
-        // console.log(user);
+        // user = users.filter(user => user._id === userID);
     }, []);
-
+    useEffect(() => {
+        console.log(userID);
+        setUser(users.filter(user => user._id === userID)[0]);
+        console.log(users.filter(user => user._id === userID));
+    }, [users]);
     return (
         <div className="dashboard">
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
             <div className="body">
                 <div className="left">
-                    {/* <Sidebar display={display} setDisplay={setDisplay} user = {user} login={login} setLogin={setLogin}/> */}
+                    <Sidebar display={display} setDisplay={setDisplay} user = {user} login={login} setLogin={setLogin}/>
                     {/* { login? router.push('/login') : null} */}
                 </div>
                 {loading?(
