@@ -11,7 +11,9 @@ export default async function createUser(data) {
             throw new Error("User exists already")
         }
         const newUser = new User(data)
+        console.log("this point");
         await newUser.save()
+        console.log("this point 2");
         return newUser
     } catch (e) {
         throw new Error(e)

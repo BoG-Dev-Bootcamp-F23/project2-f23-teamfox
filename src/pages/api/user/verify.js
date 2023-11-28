@@ -2,6 +2,7 @@ import verifyUser from '../../../../server/mongodb/actions/verifyUser.js'
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
+        console.log("that point");
         try {
             const result =  await verifyUser(req.body)
             console.log("this worked")

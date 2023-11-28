@@ -17,9 +17,12 @@ export default function CreateAccount() {
     }
 
     async function handleSubmit() {
+        console.log("this point 6");
         try {
+            console.log("dasfasdfasfas");
             await createUser()
-            router.push('/login')
+            console.log("dsaf")
+            router.push('/Login')
         } catch (e) {
 
         }
@@ -29,24 +32,21 @@ export default function CreateAccount() {
         if (password !== confirm) {
             // error handling
         }
+        console.log("this point 5");
         const response = await fetch('/api/user', {
             method: 'POST',
             body: JSON.stringify({ fullName, email, password, admin })
         })
 
+        console.log("this point 4");
+
         if (response.status === 'Failed to create because user exists already') {
             console.log("user exists already")
         } else if (response.status === 'Failed to create because external issues') {
             // what do I do here?
-        } else {
-            // router.push({
-            //     pathname: '/login',
-            //     query: {
-            //         userID: response.userID,
-            //         admin: response.admin
-            //     }
-            // })
         }
+
+        console.log("creaet user");
     }
 
     return (
@@ -89,7 +89,7 @@ export default function CreateAccount() {
                 }}>Sign up</button>
             </form>
             <p className={styles.bottomNote}>Already have an account? <a className={styles.click} onClick={() => {
-                router.push('/login')
+                router.push('/Login')
             }}>Sign in</a></p>
         </div>
     );

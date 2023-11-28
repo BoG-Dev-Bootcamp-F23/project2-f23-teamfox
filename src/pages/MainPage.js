@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Router, { useRouter } from 'next/router.js'
+import { useRouter } from 'next/router';
 
 import Sidebar from '../components/SideBar.js';
 import SearchBar from '../components/SearchBar.js'
@@ -31,9 +31,13 @@ function renderComponent(display, animals, trainingLogs, users, searchTerm, user
 
 export default function MainPage(props) {
     // State for storing animals and training logs
-    const user = props.user;
-    const admin = user.admin;
-    const userID = user._id;
+    // const user = props.user;
+    // const user = null;
+    let user;
+    const admin = props.admin;
+    const userID = props.userID;
+
+    const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [display, setDisplay] = useState(0);
     const [login, setLogin] = useState(1);
@@ -69,6 +73,8 @@ export default function MainPage(props) {
         fetchAnimals();
         fetchTrainingLogs();
         setLoading(false);
+        // user = Users.filter(user => user._id === userID);
+        // console.log(user);
     }, []);
 
     return (
@@ -76,8 +82,8 @@ export default function MainPage(props) {
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
             <div className="body">
                 <div className="left">
-                    <Sidebar display={display} setDisplay={setDisplay} user = {user} login={login} setLogin={setLogin}/>
-                    { login? Router.push('/login') : null}
+                    {/* <Sidebar display={display} setDisplay={setDisplay} user = {user} login={login} setLogin={setLogin}/> */}
+                    {/* { login? router.push('/login') : null} */}
                 </div>
                 {loading?(
                     <div className = "loading">
